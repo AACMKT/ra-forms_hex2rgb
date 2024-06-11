@@ -7,17 +7,20 @@ function App() {
   const [bgColor, setBgColor] = useState('rgb(52, 73, 94)')
 
   const hexToRgb = (hex: string) => {
+    const hexRaw = hex.length > 7? hex.slice(0, 7): hex;
+
     setHex(() => {
-      const res = hex.slice(0,1) === '#'? hex : '#' + hex;
-      return res.length > 7? res.slice(0,7) : res
-    }
-    )
+      hex = hex.slice(0,1) === '#'? hex : '#' + hex;
+      return hex.length > 7? hex.slice(0, 7) : hex
+    })
+
     const pattern_color = "^#([A-Fa-f0-9]{6})$";
     let r: number|null = null;
     let g: number|null = null;
     let b: number|null = null;
-    if (hex.match(pattern_color)) {
-        const hex_color: string = hex.replace("#", "");
+    if (hexRaw.match(pattern_color)) {
+      console.log(hexRaw)
+        const hex_color: string = hexRaw.replace("#", "");
         r = parseInt(hex_color.substring(0, 2), 16)
         g = parseInt(hex_color.substring(2, 4), 16)
         b = parseInt(hex_color.substring(4, 6), 16);
@@ -27,12 +30,13 @@ function App() {
       if((typeof r === 'number')&&(typeof g === 'number')&&(typeof b === 'number')) {
         return `rgb(${r}, ${g}, ${b})`
       }
-      return hex.length === 7 ? 'rgb(231, 76, 60)' : rgb
+      return hexRaw.length === 7 ? 'rgb(231, 76, 60)' : 'rgb(52, 73, 94)'
       }
     )
 
     setRGB(() => {
-      if (hex.length >= 7){
+      console.log(hex)
+      if (hexRaw.length === 7){
         if((typeof r === 'number')&&(typeof g === 'number')&&(typeof b === 'number')) {
           return `rgb(${r}, ${g}, ${b})`
         }
