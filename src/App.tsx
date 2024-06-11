@@ -12,7 +12,16 @@ function App() {
       return res.length > 7? res.slice(0,7) : res
     }
     )
-    const [r, g, b] = (hex.match(/\w\w/g)!=null? hex.match(/\w\w/g)!.map((x: string): number|null  => parseInt(x, 16)?parseInt(x, 16):null):[null, null, null]);
+    const pattern_color = "^#([A-Fa-f0-9]{6})$";
+    let r: number|null = null;
+    let g: number|null = null;
+    let b: number|null = null;
+    if (hex.match(pattern_color)) {
+        const hex_color: string = hex.replace("#", "");
+        r = parseInt(hex_color.substring(0, 2), 16)
+        g = parseInt(hex_color.substring(2, 4), 16)
+        b = parseInt(hex_color.substring(4, 6), 16);
+    }
     
     setBgColor(() =>{
       if((typeof r === 'number')&&(typeof g === 'number')&&(typeof b === 'number')) {
